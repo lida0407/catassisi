@@ -1,17 +1,49 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moving Cat Animation</title>
-<link rel="stylesheet" href="style.css">
+<title>Moving ASCII Cat</title>
+<style>
+  body {
+    white-space: pre;
+    font-family: monospace;
+    font-size: 12px;
+  }
+  #cat {
+    position: absolute;
+    top: 50%;
+    left: 0;
+  }
+</style>
 </head>
 <body>
 
-<div id="catContainer">
-    <img src="https://placekitten.com/200/200" alt="Moving Cat">
+<div id="cat">
+^\\
+(oo)________
+(__)        )\\
+  ||----w |
+  ||     ||
 </div>
 
-<script src="script.js"></script>
+<script>
+  const cat = document.getElementById('cat');
+  let catPosition = 0;
+  let direction = 1;
+
+  function moveCat() {
+    const maxPosition = window.innerWidth - 200; // Adjust based on the ASCII art width
+    if (catPosition >= maxPosition || catPosition <= 0) {
+      direction *= -1; // Change direction
+    }
+    catPosition += direction; // Move cat
+    cat.style.left = `${catPosition}px`; // Update position
+
+    requestAnimationFrame(moveCat); // Continue the animation
+  }
+
+  moveCat(); // Start the animation
+</script>
 </body>
 </html>
