@@ -30,10 +30,10 @@
 <script>
   const cat = document.getElementById('cat');
   let catPosition = 0;
-  let direction = 1;
+  let direction = 5; // Increase the speed of movement
 
   function moveCat() {
-    const maxPosition = window.innerWidth - 200; // Adjust based on the ASCII art width
+    const maxPosition = document.body.clientWidth - cat.offsetWidth;
     if (catPosition >= maxPosition || catPosition <= 0) {
       direction *= -1; // Change direction
     }
@@ -45,5 +45,3 @@
 
   moveCat(); // Start the animation
 </script>
-</body>
-</html>
