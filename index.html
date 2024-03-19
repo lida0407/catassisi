@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walking Cats</title>
+<title>Multiple Types of Walking Cats</title>
 <style>
   body { overflow-x: hidden; }
   .cat { position: absolute; white-space: pre; }
@@ -12,37 +12,53 @@
 <body>
 
 <script>
-  const createCat = () => {
-    const cat = document.createElement('pre');
-    cat.className = 'cat';
-    cat.innerHTML = `
+  const catTypes = [
+    `
  /\\_/\\  
 ( o.o ) 
- > ^ < `;
+ > ^ < 
+    `,
+    `
+ /\\_/\\ 
+( o.o ) 
+( > < ) 
+    `,
+    `
+ /\\_/\\  
+( -.- ) 
+ > ^ <
+    `
+  ];
+
+  const createCat = (type) => {
+    const cat = document.createElement('pre');
+    cat.className = 'cat';
+    cat.innerHTML = catTypes[type];
     document.body.appendChild(cat);
     return cat;
   };
 
   const walk = (cat) => {
     let position = Math.random() * window.innerWidth;
-    let direction = Math.random() < 0.5 ? -1 : 1; // Random initial direction
-    let speed = Math.random() * 4 + 1; // Random speed between 1 and 5
+    let direction = Math.random() < 0.5 ? -1 : 1;
+    let speed = Math.random() * 4 + 1;
 
     const move = () => {
       if (position > window.innerWidth - cat.offsetWidth || position < 0) {
-        direction *= -1; // Change direction
+        direction *= -1;
       }
       position += speed * direction;
       cat.style.left = position + 'px';
-      requestAnimationFrame(move); // Recursively call move for smooth animation
+      requestAnimationFrame(move);
     };
 
     move();
   };
 
-  // Generate and animate 50 cats
+  // Generate and animate cats of different types
   for (let i = 0; i < 50; i++) {
-    const cat = createCat();
+    const type = Math.floor(Math.random() * catTypes.length); // Randomly select cat type
+    const cat = createCat(type);
     cat.style.top = `${Math.random() * (window.innerHeight - 20)}px`; // Randomize vertical position
     walk(cat);
   }
