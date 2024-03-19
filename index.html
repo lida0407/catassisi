@@ -9,11 +9,13 @@
     white-space: pre;
     font-family: monospace;
     font-size: 12px;
+    overflow: hidden;
+    background-color: #f0f0f0;
   }
   #cat {
     position: absolute;
     top: 50%;
-    left: 0;
+    transform: translateY(-50%);
   }
 </style>
 </head>
@@ -23,20 +25,22 @@
  /\_/\  
 ( o.o ) 
  > ^ <
-
 </div>
 
 <script>
   const cat = document.getElementById('cat');
   let catPosition = 0;
-  let direction = 5; // Increase the speed of movement
+  let direction = 1;
 
   function moveCat() {
     const maxPosition = document.body.clientWidth - cat.offsetWidth;
     if (catPosition >= maxPosition || catPosition <= 0) {
       direction *= -1; // Change direction
+      cat.textContent = direction === 1 ? 
+        ` /\\_/\\  \n( o.o ) \n > ^ < ` : // Cat facing right
+        ` /\\_/\\  \n( o.o ) \n < ^ > `; // Cat facing left (mirror image)
     }
-    catPosition += direction; // Move cat
+    catPosition += 5 * direction; // Move cat
     cat.style.left = `${catPosition}px`; // Update position
 
     requestAnimationFrame(moveCat); // Continue the animation
@@ -44,3 +48,5 @@
 
   moveCat(); // Start the animation
 </script>
+</body>
+</html>
