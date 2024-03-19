@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cat ASCII is CC</title>
+<title>Cat ASCII is CC - Blog</title>
 <style>
-  body, html { margin: 0; padding: 0; overflow-x: hidden; height: 100%; }
+  body, html { margin: 0; padding: 0; overflow-x: hidden; height: 100%; font-family: Arial, sans-serif; }
   .cats-container {
     position: fixed;
     top: 0;
@@ -14,19 +14,28 @@
     height: 100%;
     z-index: -1; /* Behind main content */
     pointer-events: none; /* Make it non-interactive */
+    color: lightgrey;
   }
-  .cat {
-    position: absolute;
-    white-space: pre;
-    color: lightgrey; /* Change cat color to light grey */
-  }
+  .cat { position: absolute; white-space: pre; }
   #main-content {
     position: relative;
     z-index: 1; /* Ensure content is in front */
-    text-align: center;
-    padding-top: 20px;
-    color: black; /* Ensure main content is easily readable */
+    max-width: 800px; /* Adjust based on preference */
+    margin: auto;
+    padding: 20px;
+    background-color: white; /* Optional: improves readability */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: adds depth */
   }
+  header {
+    text-align: center;
+    padding: 20px 0;
+  }
+  article {
+    margin-bottom: 40px;
+  }
+  .post-title { font-size: 24px; margin-bottom: 10px; }
+  .post-meta { font-size: 14px; color: #666; margin-bottom: 20px; }
+  .post-content { font-size: 16px; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -34,48 +43,65 @@
 <div class="cats-container" id="cats-container"></div>
 
 <div id="main-content">
-  <h1>Welcome to My Page</h1>
-  <p>This is the main content area. The walking cats are a non-interactive background.</p>
+  <header>
+    <h1>Cat ASCII is CC - Blog</h1>
+    <p>Welcome to the world of ASCII art and cats!</p>
+  </header>
+  <article>
+    <h2 class="post-title">The Joy of ASCII Art</h2>
+    <p class="post-meta">Posted on July 1, 2024 by Admin</p>
+    <div class="post-content">
+      <p>ASCII art has a long and storied history in the realm of digital creativity...</p>
+    </div>
+  </article>
+  <article>
+    <h2 class="post-title">Why Cats Dominate the Internet</h2>
+    <p class="post-meta">Posted on July 10, 2024 by Admin</p>
+    <div class="post-content">
+      <p>It's no secret that cats are the unofficial mascots of the internet...</p>
+    </div>
+  </article>
+  <!-- Add more articles here -->
 </div>
 
 <script>
-  const catTypes = [
-    ` /\\_/\\  \n( o.o ) \n > ^ < `,
-    ` /\\_/\\ \n( o.o ) \n( > < ) `,
-    ` /\\_/\\  \n( -.- ) \n > ^ < `
-  ];
+const catTypes = [
+  ` /\\_/\\  \n( o.o ) \n > ^ < `,
+  ` /\\_/\\ \n( o.o ) \n( > < ) `,
+  ` /\\_/\\  \n( -.- ) \n > ^ < `
+];
 
-  const createCat = (type) => {
-    const cat = document.createElement('pre');
-    cat.className = 'cat';
-    cat.innerHTML = catTypes[type];
-    document.getElementById('cats-container').appendChild(cat);
-    return cat;
+const createCat = (type) => {
+  const cat = document.createElement('pre');
+  cat.className = 'cat';
+  cat.innerHTML = catTypes[type];
+  document.getElementById('cats-container').appendChild(cat);
+  return cat;
+};
+
+const walk = (cat) => {
+  let position = Math.random() * window.innerWidth;
+  let direction = Math.random() < 0.5 ? -1 : 1;
+  let speed = Math.random() * 4 + 1;
+
+  const move = () => {
+    if (position > window.innerWidth - cat.offsetWidth || position < 0) {
+      direction *= -1;
+    }
+    position += speed * direction;
+    cat.style.left = position + 'px';
+    requestAnimationFrame(move);
   };
 
-  const walk = (cat) => {
-    let position = Math.random() * window.innerWidth;
-    let direction = Math.random() < 0.5 ? -1 : 1;
-    let speed = Math.random() * 4 + 1;
+  move();
+};
 
-    const move = () => {
-      if (position > window.innerWidth - cat.offsetWidth || position < 0) {
-        direction *= -1;
-      }
-      position += speed * direction;
-      cat.style.left = position + 'px';
-      requestAnimationFrame(move);
-    };
-
-    move();
-  };
-
-  for (let i = 0; i < 50; i++) {
-    const type = Math.floor(Math.random() * catTypes.length);
-    const cat = createCat(type);
-    cat.style.top = `${Math.random() * (window.innerHeight - 20)}px`;
-    walk(cat);
-  }
+for (let i = 0; i < 50; i++) {
+  const type = Math.floor(Math.random() * catTypes.length);
+  const cat = createCat(type);
+  cat.style.top = `${Math.random() * (window.innerHeight - 20)}px`;
+  walk(cat);
+}
 </script>
 
 </body>
