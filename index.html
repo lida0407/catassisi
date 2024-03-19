@@ -3,35 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walking Cat</title>
+<title>Walking Cats</title>
 <style>
   body { overflow-x: hidden; }
-  #cat { position: absolute; white-space: pre; }
+  .cat { position: absolute; white-space: pre; }
 </style>
 </head>
 <body>
 
-<pre id="cat">
-=^.^=
-</pre>
-
 <script>
-  const cat = document.getElementById('cat');
-  let position = 0;
-  let direction = 1; // 1 for right, -1 for left
-  let speed = 5; // Change this to make the cat walk faster or slower
+  const createCat = () => {
+    const cat = document.createElement('pre');
+    cat.className = 'cat';
+    cat.innerHTML = `
+ /\\_/\\  
+( o.o ) 
+ > ^ < `;
+    document.body.appendChild(cat);
+    return cat;
+  };
 
-  function walk() {
-    if (position > window.innerWidth - cat.offsetWidth || position < 0) {
-      direction *= -1; // Change direction when hitting the screen bounds
-      cat.textContent = direction === 1 ? '=^.^=' : '=^.^='; // Flip the cat direction if desired
-    }
-    position += speed * direction;
-    cat.style.left = position + 'px';
-    requestAnimationFrame(walk); // Recursively call walk for smooth animation
+  const walk = (cat) => {
+    let position = Math.random() * window.innerWidth;
+    let direction = Math.random() < 0.5 ? -1 : 1; // Random initial direction
+    let speed = Math.random() * 4 + 1; // Random speed between 1 and 5
+
+    const move = () => {
+      if (position > window.innerWidth - cat.offsetWidth || position < 0) {
+        direction *= -1; // Change direction
+      }
+      position += speed * direction;
+      cat.style.left = position + 'px';
+      requestAnimationFrame(move); // Recursively call move for smooth animation
+    };
+
+    move();
+  };
+
+  // Generate and animate 50 cats
+  for (let i = 0; i < 50; i++) {
+    const cat = createCat();
+    cat.style.top = `${Math.random() * (window.innerHeight - 20)}px`; // Randomize vertical position
+    walk(cat);
   }
-
-  walk(); // Start the animation
 </script>
 
 </body>
