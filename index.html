@@ -3,130 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moving ASCII Cat</title>
+<title>Walking Cat</title>
 <style>
-  body {
-    white-space: pre;
-    font-family: monospace;
-    font-size: 12px;
-    overflow: hidden;
-    background-color: #f0f0f0;
-  }
-  #cat {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+  body { overflow-x: hidden; }
+  #cat { position: absolute; white-space: pre; }
 </style>
 </head>
 <body>
 
-<div id="cat">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moving ASCII Cat</title>
-<style>
-  body {
-    white-space: pre;
-    font-family: monospace;
-    font-size: 12px;
-    overflow: hidden;
-    background-color: #f0f0f0;
-  }
-  #cat {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-</style>
-</head>
-<body>
-
-<div id="cat">
-                                .:.                                                                 
-                              :!?Y5J:                                                               
-   ..                        ~JJY5PGY.                                                              
-  .??7~:                    ~?JJYY5PP~                                                              
-   ?JJJJ7~:.           .^^:~7?JYY5PPP?                                                              
-   :JJJJJJJ?7~~!~~~~~!7JYYJ?7??JY5GGP?                                                              
-    ^JJYJJJ?JY5555555YYYYJ???7???J5PGY.                                                             
-     .7J?????JJYYYY5PYYJYJ7!7777??Y5GP?                                                             
-      .?7777!!7J??YGP5J?YJ!!?J?77???JJJ?^                                                           
-      ~J7!!77??YJJ5PP555PPG####GYYYY55YYY~                                                          
-    .!???7JP##&#B555P5GGP&@@@@&5Y555PPGGPP~                                                         
-    !J??JYJB&@@@@B!?JJYY5#BBBPJ?JJY55PGGGGP^. ..     .                                              
-   :7???YYYJ5PG5JJ?!77?YYJ77?7777?JY5PPPPPG5YYYYYYYYYYYJ??7!~^:.                                    
-   ^??77??7777?7!7?YYYGB57??JJJJJY5PPPP55GGGPP5555555555555P555YJ?7!~^:.                            
-   .77!!777?JJY?7!!JPBBPJ?????JY5PPPP555PGGGBBGGPPP5PPPP55555Y5YYYY55YYYJJ7!^.                      
-    ~!~!?YY5YJ777??JYGPYYYYYYJJJY55555PPGPGGGBBBBBGGPPPPPPP55YYYYYYYY5YY555PP5Y?!^:.                
-    .777?JYYJ??JJY5PGBBGPPPPPPP55YYYY55PPPPPPPBBBBBGPPGGPGPP5YY5YYYYY5Y555555PPGGGP5YJ?!^.          
-     ~J?77???JY55PPPPPPPPPPGPPPPPPPPP55YYYY555GBBBGBBGGPGGPP555YYJJJY5555YY55PPPPGP5555PP5J!.       
-    .77777????JY5555P555PPPPPPPPPPPP55YYYYJJYYPGGGGBBBGPPGGPP5YYYJYJYY5555Y555555PPP555555PP57:     
-    ^?7777????JJYY555PPPPPPPPPP5555YYJ?JJ???JYPPPPGGGBBGPPGGP5YJJJJJJJJJ5555YYYY555555PP5YYYJJJ7^   
-    ^J?777!!77??JYYY55555YYYYYJYJJJ??????7??JYYYY5555PBBGPPPPP5YJJJJJ??JYYYJYJJY55555Y55555YJJ?7??7.
-     ?J777!!!!!!777????J??77777777!77777???JJJJYYYY55PPGBBP5PP55YJJY?7??JJ??????JYY5Y555PPP5YYJ??J5!
-     ^5J?7!!!!!!!!!!!!77!!7!!!!!!77?7??????JJ??JJY5555PPGBGP555YYYJJ?????7777777777JJYYYYYYJ?77?YYP~
-      JP5YJ??777!!!!!777777777777??7?????????777???JJYYY55PGG5YYYYYJ???J?77?77777!!!777777777JYPGB#!
-       ~?5PP5YJJJJJYJJJ??????7??JJJJYYJJJ??7777!~~~!77?JY5PGBP5YYJ??????777JYYJJ?777??7??JJY5GB####!
-          :7JYYY5GP5YYYYJJJ??JJYY55YYYYJJ??7!~~~!!!!7?JY5PGGBBP55YJYYYJJJYPGGGPP55Y55555PPPGB##&@@#~
-                .J5?!~~!!7??J?JJYG5PP5J?!~^::^~!77???J5PGBB##G5YJJJY5PGB#&@&&##BBBBB#BBBBBB#&&@#P7. 
-                  ^!7!~!!!!!!7777?JJ7!^^^^^^~~!!777?YYPGBGY7^.     ..:^!?J5PGPYJ?77?JJ7!^::^~~~.    
-                    :!7????J?JJJJY57^^^^~~~!77777?JY5BBP7.                                          
-                      .^!?YYYYYY5GB?!~~!!77?JJJY55PGGY~                                             
-                          .^!J5GPY????JJJJYY55PGBG57:                                               
-                              ..     .^~7?JY5PPY7:                                                  
-                                            ...                                                     
-</div>
+<pre id="cat">
+=^.^=
+</pre>
 
 <script>
   const cat = document.getElementById('cat');
-  let catPosition = 0;
-  let direction = 1;
+  let position = 0;
+  let direction = 1; // 1 for right, -1 for left
+  let speed = 5; // Change this to make the cat walk faster or slower
 
-  function moveCat() {
-    const maxPosition = document.body.clientWidth - cat.offsetWidth;
-    if (catPosition >= maxPosition || catPosition <= 0) {
-      direction *= -1; // Change direction
-      cat.textContent = direction === 1 ? 
-        ` /\\_/\\  \n( o.o ) \n > ^ < ` : // Cat facing right
-        ` /\\_/\\  \n( o.o ) \n < ^ > `; // Cat facing left (mirror image)
+  function walk() {
+    if (position > window.innerWidth - cat.offsetWidth || position < 0) {
+      direction *= -1; // Change direction when hitting the screen bounds
+      cat.textContent = direction === 1 ? '=^.^=' : '=^.^='; // Flip the cat direction if desired
     }
-    catPosition += 5 * direction; // Move cat
-    cat.style.left = `${catPosition}px`; // Update position
-
-    requestAnimationFrame(moveCat); // Continue the animation
+    position += speed * direction;
+    cat.style.left = position + 'px';
+    requestAnimationFrame(walk); // Recursively call walk for smooth animation
   }
 
-  moveCat(); // Start the animation
+  walk(); // Start the animation
 </script>
-</body>
-</html>
 
-</div>
-
-<script>
-  const cat = document.getElementById('cat');
-  let catPosition = 0;
-  let direction = 1;
-
-  function moveCat() {
-    const maxPosition = document.body.clientWidth - cat.offsetWidth;
-    if (catPosition >= maxPosition || catPosition <= 0) {
-      direction *= -1; // Change direction
-      cat.textContent = direction === 1 ? 
-        ` /\\_/\\  \n( o.o ) \n > ^ < ` : // Cat facing right
-        ` /\\_/\\  \n( o.o ) \n < ^ > `; // Cat facing left (mirror image)
-    }
-    catPosition += 5 * direction; // Move cat
-    cat.style.left = `${catPosition}px`; // Update position
-
-    requestAnimationFrame(moveCat); // Continue the animation
-  }
-
-  moveCat(); // Start the animation
-</script>
 </body>
 </html>
