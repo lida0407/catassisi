@@ -1,0 +1,14 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+#catContainer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
